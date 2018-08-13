@@ -59,7 +59,7 @@ class Tester():
 
 
 if __name__ == "__main__":
-    tester = Tester("../../../../ckpt/PG3_study/ResNet18_CIFAR10_attached_2layers.pth")
+    tester = Tester("../../../../ckpts/PG3_study/ResNet18_CIFAR10_attached_2layers.pth")
     tester.test()
 
     """

@@ -59,10 +59,10 @@ class Tester():
 
 
 if __name__ == "__main__":
-    tester = Tester("../../../../ckpt/PG3_study/AlexNet_CIFAR10_attached_2layers.pth")
+    tester = Tester("../../../../ckpts/PG3_study/AlexNet_CIFAR10_attached_2layers.pth")
     tester.test()
 
-    """
-    Test loss: 0.714 Test accuracy: 0.755
-    """
+"""
+Test loss: 0.628 Test accuracy: 0.791
+"""
 
