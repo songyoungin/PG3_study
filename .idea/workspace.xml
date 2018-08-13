@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="33907abe-0dfa-42c9-b42f-06c528bc56ce" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/dataloader.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/graphs.PNG" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/model.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/tester.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/trainer.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/vis_tool.py" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers/dataloader.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers/graphs.PNG" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers/model.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers/tester.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers/trainer.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers/vis_tool.py" afterPath="" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet/model.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1248">
+              <caret line="52" column="13" lean-forward="false" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="trainer.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet/trainer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1716">
+              <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tester.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet/tester.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-228">
+              <caret line="29" column="25" lean-forward="true" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jupyter Notebook" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>class_names</find>
+      <find>self.net</find>
+      <find>0.2371</find>
+      <find>-0.0104</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Residual_network.ipynb" />
+        <option value="$PROJECT_DIR$/Residual_network.py" />
+        <option value="$PROJECT_DIR$/Transfer_learning.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/dataloader.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/vis_tool.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/trainer.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/tester.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/resnet_tester.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/01_modify_last_FC_layer/dataloader.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/02_delete_last_FC_layer/dataloader.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/02_delete_last_FC_layer/tester.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/01_modify_last_FC_layer/trainer.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers/dataloader.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers/model.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers/tester.py" />
+        <option value="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers/trainer.py" />
+        <option value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/trainer.py" />
+        <option value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/tester.py" />
+        <option value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/dataloader.py" />
+        <option value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/Inception/model.py" />
+        <option value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet/trainer.py" />
+        <option value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet/tester.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="951" />
+    <option name="width" value="978" />
+    <option name="height" value="1050" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Study_PG3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study_PG3" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study_PG3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study_PG3" type="462c0819:PsiDirectoryNode" />
+              <item name="GAN" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study_PG3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study_PG3" type="462c0819:PsiDirectoryNode" />
+              <item name="Transfer_learning" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study_PG3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study_PG3" type="462c0819:PsiDirectoryNode" />
+              <item name="Transfer_learning" type="462c0819:PsiDirectoryNode" />
+              <item name="01_modify_last_FC_layer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study_PG3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study_PG3" type="462c0819:PsiDirectoryNode" />
+              <item name="Transfer_learning" type="462c0819:PsiDirectoryNode" />
+              <item name="02_delete_last_FC_layer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study_PG3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study_PG3" type="462c0819:PsiDirectoryNode" />
+              <item name="Transfer_learning" type="462c0819:PsiDirectoryNode" />
+              <item name="03_connect_with_other_layers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Study_PG3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Study_PG3" type="462c0819:PsiDirectoryNode" />
+              <item name="Transfer_learning" type="462c0819:PsiDirectoryNode" />
+              <item name="03_connect_with_other_layers" type="462c0819:PsiDirectoryNode" />
+              <item name="AlexNet" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Dev\Study_PG3\Transfer_learning\03_connect_with_other_layers\ResNet" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Dev\Study_PG3\Transfer_learning\03_connect_with_other_layers\Inception" />
+      <recent name="E:\Dev\Study_PG3\transfer_learning\03_connect_with_other_layers" />
+      <recent name="C:\Users\young\Desktop\[PG3] Study\transfer_learning\02_delete_last_FC_layer" />
+      <recent name="C:\Users\young\Desktop\[PG3] Study\hymenoptera_data" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.trainer">
+    <configuration name="model (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/Inception" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="[PG3] Study" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/Inception/model.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="tester (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="[PG3] Study" />
+      <option name="SCRIPT_NAME" value="E:\Dev\Study_PG3\Transfer_learning\03_connect_with_other_layers\ResNet\tester.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="tester (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="[PG3] Study" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/transfer_learning/03_connect_with_other_layers/tester.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="tester" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="[PG3] Study" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/tester.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="trainer" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="[PG3] Study" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet/trainer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Python.tester (2)" />
+      <item index="1" class="java.lang.String" itemvalue="Python.tester (1)" />
+      <item index="2" class="java.lang.String" itemvalue="Python.tester" />
+      <item index="3" class="java.lang.String" itemvalue="Python.model (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Python.trainer" />
+    </list>
+    <recent_temporary>
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.trainer" />
+        <item index="1" class="java.lang.String" itemvalue="Python.model (1)" />
+        <item index="2" class="java.lang.String" itemvalue="Python.tester" />
+        <item index="3" class="java.lang.String" itemvalue="Python.tester (1)" />
+        <item index="4" class="java.lang.String" itemvalue="Python.tester (2)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="33907abe-0dfa-42c9-b42f-06c528bc56ce" name="Default" comment="" />
+      <created>1533999134812</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1533999134812</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973656" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21436228" sideWeight="0.5021075" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.030010719" sideWeight="0.49789253" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/transfer_learning/02_delete_last_FC_layer/tester.py</url>
+          <line>15</line>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/tester.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="2" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/02_delete_last_FC_layer/tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="12" column="14" lean-forward="false" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#39#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/01_modify_last_FC_layer/tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="14" column="29" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/dataloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="768">
+          <caret line="35" column="58" lean-forward="false" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="984">
+          <caret line="45" column="46" lean-forward="true" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#12#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#12#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/trainer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1584">
+          <caret line="77" column="62" lean-forward="true" selection-start-line="77" selection-start-column="62" selection-end-line="77" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#12#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/02_delete_last_FC_layer/tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="768">
+          <caret line="32" column="9" lean-forward="false" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#39#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/01_modify_last_FC_layer/tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/01_modify_last_FC_layer/trainer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="44" column="0" lean-forward="true" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/02_delete_last_FC_layer/tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="32" column="9" lean-forward="true" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#39#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/transfer_learning/tester.py" />
+    <entry file="file://$PROJECT_DIR$/transfer_learning/trainer.py" />
+    <entry file="file://$PROJECT_DIR$/transfer_learning/dataloader.py" />
+    <entry file="file://$PROJECT_DIR$/transfer_learning/trainer.py" />
+    <entry file="file://$PROJECT_DIR$/transfer_learning/dataloader.py" />
+    <entry file="file://$PROJECT_DIR$/transfer_learning/trainer.py" />
+    <entry file="file://$PROJECT_DIR$/Residual_network.ipynb" />
+    <entry file="file://$PROJECT_DIR$/Residual_network.ipynb" />
+    <entry file="file://$PROJECT_DIR$/Transfer_learning.py" />
+    <entry file="file://$PROJECT_DIR$/transfer_learning/vis_tool.py" />
+    <entry file="file://$PROJECT_DIR$/transfer_learning/dataloader.py" />
+    <entry file="file://$PROJECT_DIR$/transfer_learning/trainer.py" />
+    <entry file="file://$PROJECT_DIR$/transfer_learning/resnet_tester.py" />
+    <entry file="file://$PROJECT_DIR$/transfer_learning/tester.py" />
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/02_delete_last_FC_layer/dataloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="40" column="61" lean-forward="false" selection-start-line="40" selection-start-column="61" selection-end-line="40" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/01_modify_last_FC_layer/dataloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-507">
+          <caret line="10" column="36" lean-forward="false" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/vis_tool.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/01_modify_last_FC_layer/trainer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="135" column="63" lean-forward="true" selection-start-line="135" selection-start-column="4" selection-end-line="135" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="984">
+          <caret line="45" column="46" lean-forward="false" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#12#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/02_delete_last_FC_layer/tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="12" column="14" lean-forward="false" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#39#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/01_modify_last_FC_layer/tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="14" column="29" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/trainer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="110" column="19" lean-forward="false" selection-start-line="110" selection-start-column="19" selection-end-line="110" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#12#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/dataloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1">
+          <caret line="30" column="55" lean-forward="false" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/ResNet/tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="57" column="30" lean-forward="true" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#12#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet/dataloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet/vis_tool.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet/trainer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1716">
+          <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet/tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-228">
+          <caret line="29" column="25" lean-forward="true" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Transfer_learning/03_connect_with_other_layers/AlexNet/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1248">
+          <caret line="52" column="13" lean-forward="false" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
