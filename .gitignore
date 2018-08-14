@@ -4,3 +4,5 @@
 /GAN/gan_discriminator.pkl
 /GAN/gan_discriminator.pth
 /GAN/gan_generator.pkl
+/GAN/VanillaGAN/weights
+/GAN/DCGAN/weights

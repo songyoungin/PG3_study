@@ -29,7 +29,7 @@ transform = transforms.Compose([
 latent_size = 64
 hidden_size = 256
 image_size = 784
-n_epochs = 200
+n_epochs = 100
 batch_size = 100
 sample_dir = 'samples'
 
@@ -38,7 +38,7 @@ if not os.path.exists(sample_dir):
     os.makedirs(sample_dir)
 
 # Set dataset and dataloader
-mnist = datasets.MNIST(root='./data',
+mnist = datasets.MNIST(root='../data',
                        download=True,
                        transform=transform)
 
@@ -106,6 +106,10 @@ if __name__ == "__main__":
     G = Generator().to(device)
     D = Discriminator().to(device)
 
+    # load weights trained G and D
+    G = torch.load("weights/gan_generator.pth")
+    D = torch.load("weights/gan_discriminator.pth")
+
     # set loss function and optimizers
     criterion = nn.BCELoss()
 
@@ -118,7 +122,7 @@ if __name__ == "__main__":
         D_opt.zero_grad()
 
     total_step = len(dataloader)
-    for epoch in range(100):
+    for epoch in range(n_epochs):
         avg_D_loss = []
         avg_G_loss = []
 
@@ -133,11 +137,10 @@ if __name__ == "__main__":
             #                      Train the discriminator                       #
             # ================================================================== #
 
-            ########### 구분자 학습 ###########
-            # 구분자: 진짜 이미지 입력 -> 1에 가까운 확률값
-            #         가짜 이미지 입력 -> 0에 가까운 확률값
-            # loss = (진짜 이미지 입력 시 출력값과 1의 차이) + (가짜 이미지 입력 시 출력값과 0의 차이)
-            # 이 loss를 최소화 하는 방향
+            # D(real image) => must be ~ 1
+            # D(fake image) => must be ~ 0
+            # loss = abs(D(real image)-1) + abs(D(fake image)-0)
+            # minimize this loss
 
             # compute loss using real images
             D_result_from_real = D(real_data)
@@ -175,7 +178,7 @@ if __name__ == "__main__":
 
             if (step+1) % 100 == 0:
                 print('Epoch [{}/{}], Step [{}/{}], d_loss: {:.4f}, g_loss: {:.4f}, D(x): {:.2f}, D(G(z)): {:.2f}'
-                      .format(epoch, n_epochs,
+                      .format(epoch+1+100, n_epochs+100,
                               step + 1, total_step,
                               D_loss.item(), G_loss.item(),
                               D_score_real.mean().item(),
@@ -195,7 +198,7 @@ if __name__ == "__main__":
                         )
 
         message = base_message.format(
-            epoch=epoch+1,
+            epoch=100 + epoch + 1,
             d_loss=avg_D_loss,
             g_loss=avg_G_loss,
             tpr=true_positive_rate,
@@ -211,15 +214,10 @@ if __name__ == "__main__":
             save_image(denorm(real_data), os.path.join(sample_dir, 'real_images.png'))
 
         # Save sampled images
-        save_image(denorm(fake_data), os.path.join(sample_dir, 'fake_images-{}.png'.format(epoch + 1)))
+        save_image(denorm(fake_data), os.path.join(sample_dir, 'fake_images-{}.png'.format(100+ epoch + 1)))
 
-
-
-    torch.save(G, "gan_generator.pth")
-    torch.save(D, "gan_discriminator.pth")
-
-    torch.save(G.state_dict(), "gan_generator.pkl")
-    torch.save(D.state_dict(), "gan_discriminator.pkl")
+    torch.save(G, "weights/G_ep200.pth")
+    torch.save(D, "weights/D_ep200.pth")
 
 
 
