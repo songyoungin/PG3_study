@@ -1,7 +1,7 @@
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
-import cv2, os
+import cv2, os, shutil
 from scipy.misc import imresize
 
 # Define image processing
@@ -39,8 +39,8 @@ def preprocessing(dataroot):
     print("Image preprocessing complete! Do you want to delete original dataroot?")
     ch = input()
     if ch == 'y':
-        os.removedirs(dataroot) # delete folder
-    print("Delete complete!")
+        shutil.rmtree(dataroot) # delete folder
+        print("Delete complete!")
 
 # Return image data loader
 def get_loader(save_root, batch_size):
