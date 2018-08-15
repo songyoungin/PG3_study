@@ -1,8 +1,6 @@
 /Transfer_learning/data
+
 /GAN/data
-/GAN/gan_generator.pth
-/GAN/gan_discriminator.pkl
-/GAN/gan_discriminator.pth
-/GAN/gan_generator.pkl
+
+/GAN/DCGAN/MNIST/weights
 /GAN/VanillaGAN/weights
-/GAN/DCGAN/weights
