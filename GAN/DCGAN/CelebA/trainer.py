@@ -68,6 +68,8 @@ class Trainer():
 
         total_step = len(self.dataloader)
         print("total step:", total_step)
+        smallest_loss = 50000.0
+
         for epoch in range(self.num_epochs):
             avg_D_loss = []
             avg_G_loss = []
@@ -87,7 +89,7 @@ class Trainer():
                 real_data = real_data.to(device)  # shape: batch, 1, 28, 28
                 # print("read_data shape:", real_data.shape)
 
-                step_batch = real_data.size()[0]
+                step_batch = real_data.size()[0] # batch size of this step
 
                 # create the labels
                 target_real = torch.ones(step_batch).to(device)
@@ -161,9 +163,6 @@ class Trainer():
                 avg_D_loss.append(D_loss.item())
                 avg_G_loss.append(G_loss.item())
 
-                if step == 5:
-                    break
-
             avg_D_loss = np.mean(avg_D_loss)
             avg_G_loss = np.mean(avg_G_loss)
 
@@ -195,6 +194,14 @@ class Trainer():
             save_image(self.denorm(fake_data), os.path.join(sample_dir, 'fake_images-{}.png'.format(epoch + 1)))
             print("Result save complete!")
 
+            # save least lost model
+            avg_loss = (avg_D_loss + avg_G_loss) / float(2)
+            if avg_loss < smallest_loss:
+                smallest_loss = avg_loss
+                torch.save(self.g, "weights/temp_best_G.pth")
+                torch.save(self.d, "weights/temp_best_D.pth")
+
+        print("learning complete!!")
         torch.save(self.g, "weights/DCGAN_celebA_G_ep"+str(self.num_epochs)+".pth")
         torch.save(self.d, "weights/DCGAN_celebA_D_ep"+str(self.num_epochs)+".pth")
         print("Weight save complete!")
@@ -203,7 +210,7 @@ if __name__ == "__main__":
     root = '../../data/resized_celebA/'
     batch_size = 128
     lr = 0.002
-    num_epochs = 1
+    num_epochs = 20
 
     trainer = Trainer(root, batch_size, lr, num_epochs)
     trainer.train()
