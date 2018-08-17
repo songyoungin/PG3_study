@@ -6,3 +6,15 @@
 /GAN/DCGAN/CelebA/weights
 
 /GAN/VanillaGAN/weights
+/.idea
+/GAN/.idea
+/GAN/DCGAN/.idea
+/GAN/DCGAN/CelebA/__pycache__
+/GAN/VanillaGAN/__pycache__
+/GAN/VanillaGAN/.idea
+/Transfer_learning/__pycache__
+/Transfer_learning/01_modify_last_FC_layer/__pycache__
+/Transfer_learning/02_delete_last_FC_layer/__pycache__
+/Transfer_learning/03_connect_with_other_layers/__pycache__
+/Transfer_learning/03_connect_with_other_layers/AlexNet/__pycache__
+/Transfer_learning/03_connect_with_other_layers/ResNet/__pycache__
