@@ -1,216 +1,157 @@
-from dataloader import get_loader
-from model import Generator, Discriminator
-from vis_tool import Visualizer
-
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torchvision.utils import save_image
-
-import os
-import numpy as np
+import torchvision.utils as vutils
+import model.dcgan as dcgan
+from vis_tool import Visualizer
 
 # Device configuration
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-### Before begining training, you must compute weight decay epochs ###
+def weights_init(m):
+    classname = m.__class__.__name__
+    if classname.find('Conv') != -1:
+        m.weight.data.normal_(0.0, 0.02)
+    elif classname.find('BatchNorm') != -1:
+        m.weight.data.normal_(1.0, 0.02)
+        m.bias.data.fill_(0)
 
-class Trainer():
+class Trainer(object):
     # initializer
-    def __init__(self, root, batch_size, lr, num_epochs):
-        # define dataloader
-        self.dataloader = get_loader(root, batch_size)
+    def __init__(self, config, dataloader):
+        self.config = config
+        self.dataloader = dataloader
 
-        # define loss function
-        self.criterion = nn.BCELoss()
+        self.nch = int(config.nch)
+        self.nz = int(config.nz)
+        self.ngf = int(config.ngf)
+        self.ndf = int(config.ndf)
 
-        self.lr = lr
-        self.num_epochs = num_epochs
+        self.batch_size = config.batch_size
+        self.image_size = config.image_size
 
-        self.build_model()
-        self.build_opts()
+        self.lr = config.lr
+        self.beta1 = config.beta1
 
-        # visualize tool
+        self.n_epochs = config.n_epochs
+        self.out_folder = config.out_folder
+
         self.vis = Visualizer()
 
-    # build model and initialize
+        self.build_model()
+
+    # building network
     def build_model(self):
-        # define generator, discriminator
-        self.g = Generator().to(device)
-        self.d = Discriminator().to(device)
+        self.g = dcgan.Generator(self.nz, self.ngf, self.nch)
+        self.g.apply(weights_init)
 
-        # initialize model's weight
-        self.g.weight_init(mean=0.0, std=0.02)
-        self.d.weight_init(mean=0.0, std=0.02)
+        # if trained weights exists
+        if self.config.g != '':
+            self.g.load_state_dict(torch.load(self.config.g))
 
-    # define optimizers
-    def build_opts(self):
-        self.g_opt = optim.Adam(self.g.parameters(), self.lr, betas=(0.5, 0.999))
-        self.d_opt = optim.Adam(self.d.parameters(), self.lr, betas=(0.5, 0.999))
+        self.g.to(device)
 
-    # for saving result images
-    def denorm(self, x):
-        out = (x + 1) / 2
-        return out.clamp(0, 1)
+        self.d = dcgan.Discriminator(self.ndf, self.nch)
+        self.d.apply(weights_init)
 
-    # reset opts' gradients
-    def reset_grad(self):
-        self.g_opt.zero_grad()
-        self.d_opt.zero_grad()
+        # if trained weights exists
+        if self.config.d != '':
+            self.d.load_state_dict(torch.load(self.config.d))
 
-    # training
+        self.d.to(device)
+
+    # trainer method
     def train(self):
-        sample_dir = 'samples'
+        criterion = nn.BCELoss()
 
-        # Create a directory if not exists
-        if not os.path.exists(sample_dir):
-            os.makedirs(sample_dir)
+        fixed_noise = torch.FloatTensor(self.batch_size, self.nz, 1, 1).normal_(0, 1).to(device)
 
-        total_step = len(self.dataloader)
-        print("total step:", total_step)
-        smallest_loss = 50000.0
+        # setup optimizers
+        g_opt = optim.Adam(self.g.parameters(), lr=self.lr, betas=(self.beta1, 0.999))
+        d_opt = optim.Adam(self.d.parameters(), lr=self.lr, betas=(self.beta1, 0.999))
 
-        for epoch in range(self.num_epochs):
-            avg_D_loss = []
-            avg_G_loss = []
+        print("Learning started!")
 
-            # decay learning rate
-            if (epoch+1) == 11:
-                self.g_opt.param_groups[0]['lr'] /= 10
-                self.d_opt.param_groups[0]['lr'] /= 10
-                print("learning rate decay!")
-
-            if (epoch+1) == 16:
-                self.g_opt.param_groups[0]['lr'] /= 10
-                self.d_opt.param_groups[0]['lr'] /= 10
-                print("learning rate decay!")
-
+        for epoch in range(self.n_epochs):
             for step, (real_data, _) in enumerate(self.dataloader):
-                real_data = real_data.to(device)  # shape: batch, 1, 28, 28
-                # print("read_data shape:", real_data.shape)
-
-                step_batch = real_data.size()[0] # batch size of this step
-
-                # create the labels
-                target_real = torch.ones(step_batch).to(device)
-                # print("target_real shape:", target_real.shape)
-
-                target_fake = torch.zeros(step_batch).to(device)
-                # print("target_fake shape:", target_fake.shape)
-
                 # ================================================================== #
                 #                      Train the discriminator                       #
                 # ================================================================== #
+                for p in self.d.parameters():
+                    p.requires_grad = True
 
-                # D(real image) => must be ~ 1
-                # D(fake image) => must be ~ 0
-                # loss = abs(D(real image)-1) + abs(D(fake image)-0)
-                # minimize this loss
+                real_data = real_data.to(device)
+                step_batch = real_data.size(0)
 
-                # compute loss using real images
-                D_result_from_real = self.d(real_data)
-                D_loss_real = self.criterion(D_result_from_real, target_real)
-                D_score_real = D_result_from_real
+                # create the labels
+                target_real = torch.ones(step_batch).to(device)
+                target_fake = torch.zeros(step_batch).to(device)
 
-                # compute loss using fake images generated by G
-                z = torch.randn(step_batch, 100).to(device)
-                z = z.view(-1, 100, 1, 1)
-                # print("random vector Z shape:", z.shape)
+                # train with real data
+                self.d.zero_grad()
+                D_out_from_real = self.d(real_data)
+                D_loss_from_real = criterion(D_out_from_real, target_real)
+                D_x = D_out_from_real.data.mean()
+
+                # train with fake data
+                z = torch.randn(step_batch, self.nz).to(device)
+                z = z.view(-1, self.nz, 1, 1)
 
                 fake_data = self.g(z)
-                # print("fake_data shape:", fake_data.shape)
 
-                D_result_from_fake = self.d(fake_data)
-                D_loss_fake = self.criterion(D_result_from_fake, target_fake)
-                D_score_fake = D_result_from_fake
+                D_out_from_fake = self.d(fake_data)
+                D_loss_from_fake = criterion(D_out_from_fake, target_fake)
+                D_G_z1 = D_out_from_fake.data.mean()
 
                 # loss + forward + backward
-                D_loss = D_loss_real + D_loss_fake
-                self.reset_grad()
+                D_loss = D_loss_from_real + D_loss_from_fake
                 D_loss.backward()
-                self.d_opt.step()
+                d_opt.step()
 
                 # ================================================================== #
-                #                        Train the generator                         #
+                #                      Train the generator                           #
                 # ================================================================== #
+                for p in self.d.parameters():
+                    p.requires_grad = False
 
-                # compute loss using fake images generated by G
-                z = torch.randn(step_batch, 100).to(device)
-                z = z.view(-1, 100, 1, 1)
+                self.g.zero_grad()
 
+                z = torch.randn(step_batch, self.nz).to(device)
+                z = z.view(-1, self.nz, 1, 1)
                 fake_data = self.g(z)
-                D_result_from_fake = self.d(fake_data)
+                D_out_from_fake = self.d(fake_data)
+                D_G_z2 = D_out_from_fake.data.mean()
 
                 # loss + forward + backward
-                G_loss = self.criterion(D_result_from_fake, target_real)
-
-                self.reset_grad()
+                G_loss = criterion(D_out_from_fake, target_real)
                 G_loss.backward()
-                self.g_opt.step()
+                g_opt.step()
 
-                if (step + 1) % 10 == 0:
-                    print('Epoch [{}/{}], Step [{}/{}], d_loss: {:.4f}, g_loss: {:.4f}, D(x): {:.2f}, D(G(z)): {:.2f}'
-                          .format(epoch + 1, self.num_epochs,
-                                  step + 1, total_step,
-                                  D_loss.item(), G_loss.item(),
-                                  D_score_real.mean().item(),
-                                  D_score_fake.mean().item()))
+                if step % 100 == 0:
+                    print('[%d/%d][%d/%d] Loss_D: %.4f Loss_G: %.4f D(x): %.4f D(G(z)): %.4f / %.4f'
+                          % (epoch, self.n_epochs, step, len(self.dataloader),
+                             D_loss.item(), G_loss.item(), D_x, D_G_z1, D_G_z2))
 
                     # plot to visdom
-                    self.vis.plot("Discriminator Loss per step", D_loss.item())
-                    self.vis.plot("Generator Loss per step", G_loss.item())
+                    self.vis.plot("D loss per 100 step", D_loss.item())
+                    self.vis.plot("G loss per 100 step", G_loss.item())
 
-                avg_D_loss.append(D_loss.item())
-                avg_G_loss.append(G_loss.item())
+                    # save images
+                    vutils.save_image(real_data,
+                                      '%s/real_samples.png' % self.out_folder,
+                                      normalize=True)
+                    fake = self.g(fixed_noise)
+                    vutils.save_image(fake.data,
+                                      '%s/fake_samples_epoch_%03d.png' % (self.out_folder, epoch),
+                                      normalize=True)
 
-            avg_D_loss = np.mean(avg_D_loss)
-            avg_G_loss = np.mean(avg_G_loss)
+            if epoch % 10 == 0:
+                # save checkpoints
+                torch.save(self.g.state_dict(), '%s/G_epoch_%03d.pth' % (self.out_folder, epoch))
+                torch.save(self.d.state_dict(), '%s/D_epoch_%03d.pth' % (self.out_folder, epoch))
 
-            true_positive_rate = (D_result_from_real > 0.5).float().mean().item()
-            true_negative_rate = (D_result_from_fake < 0.5).float().mean().item()
+        print("learning finished!")
+        torch.save(self.g.state_dict(), '%s/G_final_%03d.pth' % (self.out_folder, epoch))
+        torch.save(self.d.state_dict(), '%s/D_final_%03d.pth' % (self.out_folder, epoch))
+        print("save checkpoint finished!")
 
-            base_message = ("Epoch: {epoch:<3d} D Loss: {d_loss:<8.6} G Loss: {g_loss:<8.6} "
-                            "True Positive Rate: {tpr:<5.1%} True Negative Rate: {tnr:<5.1%}"
-                            )
-
-            message = base_message.format(
-                epoch=epoch + 1,
-                d_loss=avg_D_loss,
-                g_loss=avg_G_loss,
-                tpr=true_positive_rate,
-                tnr=true_negative_rate
-            )
-            print(message)  # pring logging
-
-            # plot to visdom
-            self.vis.plot("Discriminator Loss per epoch", avg_D_loss)
-            self.vis.plot("Generator Loss per epoch", avg_G_loss)
-
-            # Save real images
-            if (epoch + 1) == 1:
-                save_image(self.denorm(real_data), os.path.join(sample_dir, 'real_images.png'))
-
-            # Save sampled images
-            save_image(self.denorm(fake_data), os.path.join(sample_dir, 'fake_images-{}.png'.format(epoch + 1)))
-            print("Result save complete!")
-
-            # save least lost model
-            avg_loss = (avg_D_loss + avg_G_loss) / float(2)
-            if avg_loss < smallest_loss:
-                smallest_loss = avg_loss
-                torch.save(self.g, "weights/temp_best_G.pth")
-                torch.save(self.d, "weights/temp_best_D.pth")
-
-        print("learning complete!!")
-        torch.save(self.g, "weights/DCGAN_celebA_G_ep"+str(self.num_epochs)+".pth")
-        torch.save(self.d, "weights/DCGAN_celebA_D_ep"+str(self.num_epochs)+".pth")
-        print("Weight save complete!")
-
-if __name__ == "__main__":
-    root = '../../data/resized_celebA/'
-    batch_size = 128
-    lr = 0.002
-    num_epochs = 20
-
-    trainer = Trainer(root, batch_size, lr, num_epochs)
-    trainer.train()

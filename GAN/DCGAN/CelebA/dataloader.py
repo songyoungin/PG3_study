@@ -1,64 +1,40 @@
-from torchvision import datasets, transforms
-from torch.utils.data import DataLoader
+import torch.utils.data
+import torchvision.datasets as dset
+import torchvision.transforms as transforms
 
-import cv2, os, shutil
-from scipy.misc import imresize
+def get_loader(_dataset, dataroot, batch_size, num_workers, image_size):
+    # folder dataset
+    if _dataset in ['imagenet', 'folder', 'lfw']:
+        dataset = dset.ImageFolder(root=dataroot,
+                                   transform=transforms.Compose([
+                                       transforms.Resize(image_size),
+                                       transforms.CenterCrop(image_size),
+                                       transforms.ToTensor(),
+                                       transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                                   ]))
+    elif _dataset == 'lsun':
+        dataset = dset.LSUN(db_path=dataroot, classes=['bedroom_train'],
+                            transform=transforms.Compose([
+                                transforms.Resize(image_size),
+                                transforms.CenterCrop(image_size),
+                                transforms.ToTensor(),
+                                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                            ]))
 
-# Define image processing
-img_size = 64
-transform = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize(mean=(0.5, 0.5, 0.5),
-                         std=(0.5, 0.5, 0.5))
-])
+    elif _dataset == 'cifar10':
+        dataset = dset.CIFAR10(root=dataroot, download=True,
+                               transform=transforms.Compose([
+                                   transforms.Resize(image_size),
+                                   transforms.ToTensor(),
+                                   transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+                               ]))
 
-# Resize images
-def preprocessing(dataroot):
-    save_root = '../../data/resized_celebA/'
-    resize = 64
+    elif _dataset == 'fake':
+        dataset = dset.FakeData(image_size=(3, image_size, image_size),
+                                transform=transforms.ToTensor())
 
-    # make folders
-    if not os.path.isdir(save_root):
-        os.mkdir(save_root)
-    if not os.path.isdir(save_root+'celebA'):
-        os.mkdir(save_root+'celebA')
+    assert dataset
+    dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size,
+                                             shuffle=True, num_workers=num_workers)
 
-    img_list = os.listdir(dataroot)
-
-    # resizing images
-    for idx in range(len(img_list)):
-        img = cv2.imread(dataroot + img_list[idx]) # original image
-        img = imresize(img, (resize, resize)) # resize 64*64
-        cv2.imwrite(save_root+'celebA/'+img_list[idx],
-                    img)
-
-        if (idx % 1000 == 0):
-            print("%d images complete!" % idx)
-
-    # if user wants to delete original dataroot
-    print("Image preprocessing complete! Do you want to delete original dataroot?")
-    ch = input()
-    if ch == 'y':
-        shutil.rmtree(dataroot) # delete folder
-        print("Delete complete!")
-
-# Return image data loader
-def get_loader(save_root, batch_size):
-    ds = datasets.ImageFolder(save_root, transform)
-    dataloader = DataLoader(ds, batch_size=batch_size, shuffle=True)
-
-    # get a tester image
-    temp = cv2.imread(dataloader.dataset.imgs[0][0])
-
-    if temp.shape[0] != img_size:
-        print("Error! Resize images!")
-        return None
-    else:
-        return dataloader
-
-if __name__ == "__main__":
-    dataroot = "../../data/img_align_celeba/"
-    preprocessing(dataroot)
-    
-
-    
+    return dataloader
