@@ -25,3 +25,6 @@
 /GAN/cGAN/MNIST/__pycache__
 /GAN/cGAN/MNIST/model/__pycache__
 /GAN/cGAN/MNIST/samples/weights
+/GAN/cDCGAN/.idea
+/GAN/cDCGAN/MNIST/__pycache__
+/GAN/cDCGAN/MNIST/model/__pycache__
