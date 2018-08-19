@@ -2,7 +2,7 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset', required=True, help='mnist | fashion_mnist | cifar10 | lsun | imagenet | folder | lfw | fake')
+parser.add_argument('--dataset', default='mnist', help='mnist | fashion_mnist | cifar10 | lsun | imagenet | folder | lfw | fake')
 parser.add_argument('--dataroot', default='../../data', help='path to dataset')
 parser.add_argument('--workers', type=int, help='number of data loading workers', default=2)
 parser.add_argument('--batch_size', type=int, default=128, help='input batch size')

@@ -58,8 +58,8 @@ class Trainer(object):
     # transform label to onehot format
     def get_onehot(self, label):
         step_batch = label.size(0)
-        label = label.long()
-        oneHot = torch.zeros(step_batch, self.n_classes)
+        label = label.long().to(device)
+        oneHot = torch.zeros(step_batch, self.n_classes).to(device)
         oneHot.scatter_(1, label.view(step_batch, 1), 1)
         oneHot = oneHot.to(device)
         return oneHot
@@ -76,14 +76,13 @@ class Trainer(object):
         d_opt = optim.Adam(self.d.parameters(), lr=self.lr, betas=(self.beta1, 0.999))
 
         # setup fixed noise, label
-        fixed_noise = torch.FloatTensor(self.batch_size, self.nz).normal_(0, 1).to(device)
-        fixed_label = torch.zeros(self.batch_size, self.n_classes).to(device)
+        fixed_noise = torch.FloatTensor(50, self.nz).normal_(0, 1).to(device)
+        fixed_label = (torch.rand(50, 1) * self.n_classes).long().to(device)
+        fixed_label = self.get_onehot(fixed_label)
 
         print("Learning started!!")
 
-        start_time = time.time()
         for epoch in range(self.n_epochs):
-
             # learning rate decay
             if (epoch+1) == 30:
                 g_opt.param_groups[0]['lr'] /= 10
@@ -107,12 +106,11 @@ class Trainer(object):
                 x_real = x_real.view(-1, self.image_size**2).to(device)   # real data X: batch, 28*28
                 y_real = self.get_onehot(y_)                              # real data Y: batch, 10
 
-                target_real = torch.ones(step_batch).to(device)           # target for real: batch, 10
-                target_fake = torch.zeros(step_batch).to(device)          # target tor fake: batch, 10
-
+                target_real = torch.ones(step_batch).to(device)           # target for real: batch
+                target_fake = torch.zeros(step_batch).to(device)          # target tor fake: batch
 
                 # compute output and loss with real data
-                D_out_from_real = self.d(x_real, y_real).squeeze()   # batch
+                D_out_from_real = self.d(x_real, y_real).squeeze()        # batch
                 D_x = D_out_from_real.data.mean()
 
                 D_loss_from_real = criterion(D_out_from_real, target_real)
@@ -168,18 +166,14 @@ class Trainer(object):
                     # save results
                     x_real = x_real.view(-1, 1, 28, 28)
                     x_real = self.denorm(x_real)
-                    
                     vutils.save_image(x_real,
                                       '%s/real_samples.png' % self.out_folder)
-                    print("original image save")
 
                     fake = self.g(fixed_noise, fixed_label)
                     fake = fake.view(-1, 1, 28, 28)
                     fake = self.denorm(fake)
-
                     vutils.save_image(fake,
                                       '%s/fake_samples_epoch_%03d.png' % (self.out_folder, epoch))
-                    print("fake image save")
 
             if epoch % 10 == 0:
                 # save checkpoints

@@ -36,9 +36,9 @@ def main(config):
 
     print("Prepare dataloader complete!")
 
-    gNet = Generator(config.nz, config.ngf, config.n_classes, config.image_size).to(device)
-    dNet = Discriminator(config.ngf, config.n_classes, config.image_size).to(device)
-    dNet.weight_init(mean=0, std=0.02)
+    # gNet = Generator(config.nz, config.ngf, config.n_classes, config.image_size).to(device)
+    # dNet = Discriminator(config.ngf, config.n_classes, config.image_size).to(device)
+    # dNet.weight_init(mean=0, std=0.02)
 
     # for input, label in dataloader:
     #     print("Input tensor size:", input.size())
