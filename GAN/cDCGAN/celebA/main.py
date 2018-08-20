@@ -8,8 +8,6 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from dataloader import get_loader
 from config import get_config
-from model.cdcgan import Generator, Discriminator
-
 from trainer import Trainer
 
 # Device configuration

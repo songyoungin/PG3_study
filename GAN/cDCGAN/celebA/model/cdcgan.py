@@ -25,19 +25,22 @@ class Generator(nn.Module):
         super(Generator, self).__init__()
 
         # setup network
-        self.dc1_x = nn.ConvTranspose2d(nz, ngf*2, 4, 1, 0)
-        self.bn1_x = nn.BatchNorm2d(ngf*2)
+        self.dc1_x = nn.ConvTranspose2d(nz, ngf*4, 4, 1, 0)
+        self.bn1_x = nn.BatchNorm2d(ngf*4)
 
-        self.dc1_y = nn.ConvTranspose2d(ncls, ngf*2, 4, 1, 0)
-        self.bn1_y = nn.BatchNorm2d(ngf*2)
+        self.dc1_y = nn.ConvTranspose2d(ncls, ngf*4, 4, 1, 0)
+        self.bn1_y = nn.BatchNorm2d(ngf*4)
 
-        self.dc2 = nn.ConvTranspose2d(ngf*4, ngf*2, 4, 2, 1)
-        self.bn2 = nn.BatchNorm2d(ngf*2)
+        self.dc2 = nn.ConvTranspose2d(ngf*8, ngf*4, 4, 2, 1)
+        self.bn2 = nn.BatchNorm2d(ngf*4)
 
-        self.dc3 = nn.ConvTranspose2d(ngf*2, ngf, 4, 2, 1)
-        self.bn3 = nn.BatchNorm2d(ngf)
+        self.dc3 = nn.ConvTranspose2d(ngf*4, ngf*2, 4, 2, 1)
+        self.bn3 = nn.BatchNorm2d(ngf*2)
 
-        self.dc4 = nn.ConvTranspose2d(ngf, nch, 4, 2, 1)
+        self.dc4 = nn.ConvTranspose2d(ngf*2, ngf, 4, 2, 1)
+        self.bn4 = nn.BatchNorm2d(ngf)
+
+        self.dc5 = nn.ConvTranspose2d(ngf, nch, 4, 2, 1)
 
     # weight init
     def weight_init(self, mean, std):
@@ -52,7 +55,9 @@ class Generator(nn.Module):
 
         h = F.relu(self.bn2(self.dc2(h)))
         h = F.relu(self.bn3(self.dc3(h)))
-        out = F.tanh(self.dc4(h))
+        h = F.relu(self.bn4(self.dc4(h)))
+        out = F.tanh(self.dc5(h))
+
         return out
 
 class Discriminator(nn.Module):
@@ -72,7 +77,10 @@ class Discriminator(nn.Module):
         self.conv3 = nn.Conv2d(ndf*2, ndf*4, 4, 2, 1)
         self.bn3 = nn.BatchNorm2d(ndf*4)
 
-        self.conv4 = nn.Conv2d(ndf*4, 1, 4, 1, 0)
+        self.conv4 = nn.Conv2d(ndf*4, ndf*8, 4, 2, 1)
+        self.bn4 = nn.BatchNorm2d(ndf*8)
+
+        self.conv5 = nn.Conv2d(ndf*8, 1, 4, 1, 0)
 
     # weight init
     def weight_init(self, mean, std):
@@ -88,7 +96,8 @@ class Discriminator(nn.Module):
 
         h = F.leaky_relu(self.bn2(self.conv2(h)), 0.2)      # batch, ndf*2, 8, 8
         h = F.leaky_relu(self.bn3(self.conv3(h)), 0.2)      # batch, ndf*4, 4, 4
-        out = F.sigmoid(self.conv4(h))                      # batch, 1, 1, 1
-        out = out.squeeze()                                 # batch
+        h = F.leaky_relu(self.bn4(self.conv4(h)), 0.2)
+        out = F.sigmoid(self.conv5(h))
+        out = out.squeeze()
 
         return out

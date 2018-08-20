@@ -3,7 +3,6 @@ import torch.nn as nn
 import torch.optim as optim
 import torchvision.utils as vutils
 
-import cv2
 import os
 
 from model.cdcgan import Generator, Discriminator

@@ -40,3 +40,5 @@
 /GAN/cDCGAN/Fashion-MNIST/__pycache__
 /GAN/cDCGAN/Fashion-MNIST/model/__pycache__
 /GAN/cDCGAN/Fashion-MNIST/samples/weights
+/GAN/cDCGAN/celebA/__pycache__
+/GAN/cDCGAN/celebA/model/__pycache__
