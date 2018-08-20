@@ -34,3 +34,6 @@
 /GAN/cDCGAN/MNIST_noise/samples/weights
 /GAN/cDCGAN/MNIST_noise/__pycache__
 /GAN/cDCGAN/MNIST_noise/.idea
+/GAN/cDCGAN/fashonMNIST/__pycache__
+/GAN/cDCGAN/fashonMNIST/model/__pycache__
+/GAN/cDCGAN/fashonMNIST/samples/weights
