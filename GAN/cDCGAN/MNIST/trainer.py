@@ -76,8 +76,8 @@ class Trainer(object):
             fill[i, i, :, :] = 1  # shape: 10, 10, image_size, image_size
 
         # setup fixed noise, label
-        fixed_noise = torch.FloatTensor(50, self.nz).normal_(0, 1).view(-1, self.nz, 1, 1)
-        fixed_label = (torch.rand(50, 1) * self.n_classes).long().to(device).squeeze()
+        fixed_noise = torch.FloatTensor(50, self.nz).normal_(0, 1).view(-1, self.nz, 1, 1).to(device)
+        fixed_label = (torch.rand(50, 1) * self.n_classes).long().to(device).squeeze().to(device)
 
         fixed_onehot = onehot[fixed_label]
         fixed_onehot = fixed_onehot.to(device)
@@ -86,12 +86,12 @@ class Trainer(object):
 
         for epoch in range(self.n_epochs):
             # learning rate decay
-            if (epoch+1) == 30:
+            if (epoch+1) == 11:
                 g_opt.param_groups[0]['lr'] /= 5
                 d_opt.param_groups[0]['lr'] /= 5
                 print("Learning rate change!")
 
-            if (epoch+1) == 40:
+            if (epoch+1) == 16:
                 g_opt.param_groups[0]['lr'] /= 5
                 d_opt.param_groups[0]['lr'] /= 5
                 print("Learning rate change!")
@@ -121,8 +121,8 @@ class Trainer(object):
                 z_ = torch.randn((step_batch, self.nz)).view(-1, self.nz, 1, 1).to(device)
                 y_ = (torch.rand(step_batch, 1) * self.n_classes).long().to(device).squeeze()  # batch
 
-                y_label = onehot[y_] # batch, 10, 1, 1
-                y_fill = fill[y_]  # batch, 10, 32, 32
+                y_label = onehot[y_].to(device) # batch, 10, 1, 1
+                y_fill = fill[y_].to(device)  # batch, 10, 32, 32
 
                 x_fake = self.g(z_, y_label)
                 x_fake = x_fake.to(device)
@@ -150,10 +150,11 @@ class Trainer(object):
                 z_ = torch.randn((step_batch, self.nz)).view(-1, self.nz, 1, 1).to(device)
                 y_ = (torch.rand(step_batch, 1) * self.n_classes).long().to(device).squeeze()  # batch
 
-                y_label = onehot[y_]  # batch, 10, 1, 1
-                y_fill = fill[y_]     # batch, 10, 32, 32
+                y_label = onehot[y_].to(device)  # batch, 10, 1, 1
+                y_fill = fill[y_].to(device)    # batch, 10, 32, 32
 
-                x_fake = self.g(z_, y_label).to(device)
+                x_fake = self.g(z_, y_label)
+                x_fake = x_fake.to(device)
                 D_out_from_fake = self.d(x_fake, y_fill)
                 D_G_z2 = D_out_from_fake.data.mean()
 
@@ -187,12 +188,12 @@ class Trainer(object):
 
             if epoch % 10 == 0:
                 # save checkpoints
-                torch.save(self.g.state_dict(), '%s/G_epoch_%03d.pth' % (self.out_folder, epoch))
-                torch.save(self.d.state_dict(), '%s/D_epoch_%03d.pth' % (self.out_folder, epoch))
+                torch.save(self.g.state_dict(), '%s/weights/G_epoch_%03d.pth' % (self.out_folder, epoch))
+                torch.save(self.d.state_dict(), '%s/weights/D_epoch_%03d.pth' % (self.out_folder, epoch))
 
 
         print("learning finished!")
-        torch.save(self.g.state_dict(), '%s/G_final_%03d.pth' % (self.out_folder, epoch))
-        torch.save(self.d.state_dict(), '%s/D_final_%03d.pth' % (self.out_folder, epoch))
+        torch.save(self.g.state_dict(), '%s/weights/G_final_%03d.pth' % (self.out_folder, epoch))
+        torch.save(self.d.state_dict(), '%s/weights/D_final_%03d.pth' % (self.out_folder, epoch))
         print("save checkpoint finished!")
 

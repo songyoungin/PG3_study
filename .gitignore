@@ -28,3 +28,6 @@
 /GAN/cDCGAN/.idea
 /GAN/cDCGAN/MNIST/__pycache__
 /GAN/cDCGAN/MNIST/model/__pycache__
+/GAN/cDCGAN/MNIST/samples/weights
+/GAN/cDCGAN/MNIST/.idea
+/GAN/cDCGAN/MNIST_noise/model/__pycache__
