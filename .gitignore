@@ -37,3 +37,6 @@
 /GAN/cDCGAN/fashonMNIST/__pycache__
 /GAN/cDCGAN/fashonMNIST/model/__pycache__
 /GAN/cDCGAN/fashonMNIST/samples/weights
+/GAN/cDCGAN/Fashion-MNIST/__pycache__
+/GAN/cDCGAN/Fashion-MNIST/model/__pycache__
+/GAN/cDCGAN/Fashion-MNIST/samples/weights
