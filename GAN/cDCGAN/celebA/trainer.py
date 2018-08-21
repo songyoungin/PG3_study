@@ -224,7 +224,7 @@ class Trainer(object):
                 G_loss.backward()
                 g_opt.step()
 
-                if step % 100 == 0:
+                if step % 10 == 0:
                     # do logging
                     print("[%d/%d][%d/%d] Loss_D: %.4f Loss_G: %.4f D(x): %.4f D(G(z)): %.4f / %.4f"
                           % (epoch + 1, self.n_epochs, step + 1, len(self.dataloader),
@@ -241,7 +241,9 @@ class Trainer(object):
 
                     self.save_sample_results(epoch, '%s/epoch%02d.png' % (self.out_folder, epoch))
 
-            if epoch != 0 and epoch % 10 == 0:
+                    print("Save result!!")
+
+            if epoch != 0 and epoch % 5 == 0:
                 os.makedirs('%s/weights' % self.out_folder, exist_ok=True)
 
                 # save checkpoints
