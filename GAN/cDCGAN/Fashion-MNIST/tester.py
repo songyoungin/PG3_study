@@ -1,47 +1,84 @@
 import torch
-import numpy as np
-import cv2
-from model.cgan import Generator
+
+import matplotlib.pyplot as plt
+import itertools
+import os
+
+from model.cdcgan import Generator
 from config import get_config
 
 # Device configuration
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-# transform label to onehot format
-def get_onehot(label, n_classes):
-    step_batch = label.size(0)
-    label = label.long().to(device)
-    oneHot = torch.zeros(step_batch, n_classes).to(device)
-    oneHot.scatter_(1, label.view(step_batch, 1), 1)
-    oneHot = oneHot.to(device)
-    return oneHot
+class Tester(object):
+    # initializer
+    def __init__(self, config, weight_path, out_path):
+        self.config = config
 
-def denorm(x):
-    out = (x + 1) / 2
-    return out.clamp(0, 1)
+        self.nz = config.nz
+        self.ngf = config.ngf
+        self.ndf = config.ndf
+        self.nch = config.nch
+        self.ncls = config.n_classes
 
-config = get_config()
-modelGen = Generator(config.nz, config.ngf, config.n_classes, config.image_size).to(device)
-modelGen.load_state_dict(torch.load("samples/weights/G_final_049.pth"))
+        self.g_path = weight_path + "generator.pth"
 
-print(modelGen)
+        self.out_path = out_path
 
-random_z = torch.FloatTensor(2, config.nz).normal_(0, 1).to(device)
-random_y = (torch.from_numpy(np.asarray([[5], [8]])) * config.n_classes).long().to(device)
-random_y = get_onehot(random_y, config.n_classes)
+        self.load_net()
 
-out = modelGen(random_z, random_y)
-out = denorm(out)
-out = out.view(-1, 1, 28, 28).cpu().detach().numpy()
+    # load trained network
+    def load_net(self):
+        self.g = Generator(self.nz, self.ngf, self.nch, self.ncls)
+        self.g.load_state_dict(torch.load(self.g_path, map_location=lambda storage, loc: storage))
+        self.g = self.g.to(device)
+        self.g.eval() # fix parameters
 
-img1 = np.transpose(out[0], (2, 1, 0))
-img2 = np.transpose(out[1], (2, 1, 0))
+    # generate test result images
+    def test(self, nsamples):
+        # fixed noise & label
+        temp_z = torch.randn(nsamples, self.nz)
+        fixed_z = temp_z
+        fixed_y = torch.zeros(nsamples, 1)
 
-img1 = cv2.resize(img1, (120, 120))
-img2 = cv2.resize(img2, (120, 120))
+        for i in range(self.ncls-1):
+            fixed_z = torch.cat([fixed_z, temp_z], 0)
+            temp_y = torch.ones(nsamples, 1) + i
+            fixed_y = torch.cat([fixed_y, temp_y], 0)
 
-cv2.imshow("CGAN test",img1)
-cv2.waitKey(0)
+        fixed_z = fixed_z.view(-1, self.nz, 1, 1)
+        fixed_y_label = torch.zeros(nsamples*self.ncls, self.ncls)
+        fixed_y_label.scatter_(1, fixed_y.type(torch.LongTensor), 1)
+        fixed_y_label = fixed_y_label.view(-1, self.ncls, 1, 1)
 
-cv2.imshow("CGAN test",img2)
-cv2.waitKey(0)
+        fixed_z = fixed_z.to(device)
+        fixed_y_label = fixed_y_label.to(device)
+
+        # generate result images
+        result_imgs = self.g(fixed_z, fixed_y_label)
+
+        # process image and save
+        fig, ax = plt.subplots(self.ncls, nsamples, figsize=(5, 5))
+        for i, j in itertools.product(range(self.ncls), range(nsamples)):
+            ax[i, j].get_xaxis().set_visible(False)
+            ax[i, j].get_yaxis().set_visible(False)
+
+        for k in range(nsamples * self.ncls):
+            i = k // nsamples
+            j = k % nsamples
+            ax[i, j].cla()
+            ax[i, j].imshow(result_imgs[k, 0].cpu().data.numpy(), cmap='gray')
+
+        label = 'Result image'
+        fig.text(0.5, 0.04, label, ha='center')
+        plt.savefig(self.out_path)
+
+if __name__ == "__main__":
+    config = get_config()
+
+    weight_path = "D:\Deep_learning\Weights\PG3-study\GAN\Cond. DCGAN\Fashion-MNIST\\"
+
+    os.makedirs('test', exist_ok=True)
+
+    tester = Tester(config, weight_path, 'test/out.png')
+    tester.test(nsamples=15)
