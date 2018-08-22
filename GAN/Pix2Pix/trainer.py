@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 import torch.optim as optim
 import torchvision.utils as vutils
@@ -7,7 +6,7 @@ from torch.autograd import Variable
 from models.pix2pix import Generator, Discriminator
 from misc import *
 
-import time
+import time, sys
 
 from vis_tool import Visualizer
 
@@ -57,6 +56,7 @@ class Trainer(object):
         # to continue training
         if self.config.netG != "":
             netG.load_state_dict(torch.load(self.config.netG))
+            print("load generator!")
 
         netD = Discriminator(self.inch+self.outch, self.ndf)
         netD.apply(weights_init)
@@ -64,6 +64,7 @@ class Trainer(object):
         # to continue training
         if self.config.netD != "":
             netD.load_state_dict(torch.load(self.config.netD))
+            print("load discriminator!")
 
         self.netG = netG.to(device)
         self.netD = netD.to(device)
@@ -105,11 +106,11 @@ class Trainer(object):
         gan_iter = 0
         start_time = time.time()
         for epoch in range(self.nepochs):
-            # set models train mode
-            self.netD.train()
-            self.netG.train()
-            print("Switch models to train mode!")
             for step, data in enumerate(self.dataloader, 0):
+                # set models train mode
+                self.netD.train()
+                self.netG.train()
+
                 # facades-> imageA: target, imageB: input (B2A)
                 # data = [A | B]
                 if self.mode == "B2A":
@@ -143,7 +144,7 @@ class Trainer(object):
                 outD_fake = self.netD(torch.cat([fake, input], 1)) # conditional GAN
                 errD_fake = bce(outD_fake, targetD_fake)
 
-                errD = (errD_real+errD_fake) * 0.5
+                errD = (errD_real + errD_fake) * 0.5 # combined loss
                 errD.backward()
 
                 D_G_z1 = outD_fake.data.mean()
@@ -158,39 +159,39 @@ class Trainer(object):
                 self.netG.zero_grad()
 
                 # compute L_L1
-                L_img = cae(x_hat, target) * self.lambdaIMG
-
-                if self.lambdaIMG != 0 :
-                    L_img.backward(retain_graph=True)
+                if self.lambdaIMG != 0:
+                    errG_l1 = cae(x_hat, target) * self.lambdaIMG
 
                 # compute L_cGAN
                 outD_fake = self.netD(torch.cat((x_hat, input), 1)) # conditional
-
                 targetD_real = torch.ones(step_batch, 1, size_PatchGAN, size_PatchGAN).to(device)
-                errG = bce(outD_fake, targetD_real)
 
                 if self.lambdaGAN != 0:
-                    errG.backward()
+                    errG_gan =  bce(outD_fake, targetD_real)
 
                 D_G_z2 = outD_fake.data.mean()
 
+                # combined loss
+                errG = errG_l1 + errG_gan
+                errG.backward()
                 optG.step()
+
                 gan_iter += 1
 
                 if gan_iter % self.log_interval == 0:
                     end_time = time.time()
-                    print("[%d/%d] [%d/%d] time:%f D loss:%.3f Image loss:%.3f G loss:%.3f D(x)=%.3f D(G(z))=%.3f/ %.3f"
+                    print("[%d/%d] [%d/%d] time:%f D loss:%.3f G_L1 loss:%.3f G_gan loss:%.3f D(x)=%.3f D(G(z))=%.3f/ %.3f"
                           % (epoch+1, self.nepochs, step+1, len(self.dataloader),
-                             end_time-start_time, errD.item(), L_img.item(), errG.item(), D_x, D_G_z1, D_G_z2))
+                             end_time-start_time, errD.item(), errG_l1.item(), errG_gan.item(), D_x, D_G_z1, D_G_z2))
 
                     sys.stdout.flush()
                     self.train_logger.write('%d\t%f\t%f\t%f\t%f\t%f\t%f\n' % \
-                                      (gan_iter, errD.item(), errG.item(), L_img.item(), D_x, D_G_z1, D_G_z2))
+                                      (gan_iter, errD.item(), errG_l1.item(), errG_gan.item(), D_x, D_G_z1, D_G_z2))
                     self.train_logger.flush()
 
                     vis.plot("D loss per %d steps" % self.log_interval, errD.item())
-                    vis.plot("G loss per %d steps" % self.log_interval, errG.item())
-                    vis.plot("Image loss per %d steps" % self.log_interval, L_img.item())
+                    vis.plot("G_L1 loss per %d steps" % self.log_interval, errG_l1.item())
+                    vis.plot("G_gan loss per %d steps" % self.log_interval, errG_gan.item())
 
             # do checkpointing
             torch.save(self.netG.state_dict(), "%s/netG_epoch_%d.pth" % (self.out_folder, epoch + 200))
@@ -199,16 +200,14 @@ class Trainer(object):
             # do validating
             self.netD.eval()
             self.netG.eval()
-            print("Switch models to eval mode!")
             val_batch_output = torch.zeros(self.val_input.size())
             for idx in range(self.val_input.size(0)):
                 img = self.val_input[idx, :, :, :].unsqueeze(0)
                 input_img = Variable(img, volatile=True).to(device)
                 x_hat_val = self.netG(input_img)
-
-                # print("x_hat_val shape:", x_hat_val.shape)
-
                 val_batch_output[idx, :, :, :].copy_(x_hat_val.data[0])
+
             vutils.save_image(val_batch_output, "%s/generated_epoch%03d.png"
                               % (self.out_folder, epoch+200))
 
+        print("Learning finished!")
