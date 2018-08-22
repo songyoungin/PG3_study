@@ -56,6 +56,7 @@ class Tester(object):
 
         # generate result images
         result_imgs = self.g(fixed_z, fixed_y_label)
+        print(result_imgs.shape)
 
         # process image and save
         fig, ax = plt.subplots(self.ncls, nsamples, figsize=(5, 5))

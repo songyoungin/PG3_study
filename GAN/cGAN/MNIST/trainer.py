@@ -164,13 +164,13 @@ class Trainer(object):
                     self.vis.plot("G loss per 100 steps", G_loss.item())
 
                     # save results
-                    x_real = x_real.view(-1, 1, 28, 28)
+                    x_real = x_real.view(-1, 1, self.image_size, self.image_size)
                     x_real = self.denorm(x_real)
                     vutils.save_image(x_real,
                                       '%s/real_samples.png' % self.out_folder)
 
                     fake = self.g(fixed_noise, fixed_label)
-                    fake = fake.view(-1, 1, 28, 28)
+                    fake = fake.view(-1, 1, self.image_size, self.image_size)
                     fake = self.denorm(fake)
                     vutils.save_image(fake,
                                       '%s/fake_samples_epoch_%03d.png' % (self.out_folder, epoch))

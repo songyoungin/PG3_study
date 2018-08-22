@@ -2,11 +2,7 @@
 
 /GAN/data
 
-/GAN/DCGAN/MNIST/weights
-/GAN/DCGAN/CelebA/weights
-
-/GAN/VanillaGAN/weights
-
+*.pth
 *.iml
 *.pyc
 *.xml
