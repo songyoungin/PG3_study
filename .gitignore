@@ -6,3 +6,4 @@
 *.iml
 *.pyc
 *.xml
+/GAN/Pix2Pix/samples/result.gif
