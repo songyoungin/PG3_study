@@ -194,8 +194,8 @@ class Trainer(object):
                     vis.plot("G_gan loss per %d steps" % self.log_interval, errG_gan.item())
 
             # do checkpointing
-            torch.save(self.netG.state_dict(), "%s/netG_epoch_%d.pth" % (self.out_folder, epoch + 200))
-            torch.save(self.netD.state_dict(), "%s/netD_epoch_%d.pth" % (self.out_folder, epoch + 200))
+            # torch.save(self.netG.state_dict(), "%s/netG_epoch_%d.pth" % (self.out_folder, epoch+169))
+            # torch.save(self.netD.state_dict(), "%s/netD_epoch_%d.pth" % (self.out_folder, epoch+169))
 
             # do validating
             self.netD.eval()
@@ -208,6 +208,9 @@ class Trainer(object):
                 val_batch_output[idx, :, :, :].copy_(x_hat_val.data[0])
 
             vutils.save_image(val_batch_output, "%s/generated_epoch%03d.png"
-                              % (self.out_folder, epoch+200))
+                              % (self.out_folder, epoch+169))
 
         print("Learning finished!")
+        torch.save(self.netG.state_dict(), "%s/netG_final.pth" % self.out_folder)
+        torch.save(self.netD.state_dict(), "%s/netD_final.pth" % self.out_folder)
+        print("Saving PTH finished!")
