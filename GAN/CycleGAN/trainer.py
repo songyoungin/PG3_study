@@ -163,7 +163,6 @@ class Trainer(object):
                 loss_D_from_real = criterion_GAN(outD_from_real, target_real)
 
                 # compute from fake
-                fake_A = fake_A_buffer.push_and_pop(fake_A)
                 outD_from_fake = self.netD_A(fake_A.detach())
                 loss_D_from_fake = criterion_GAN(outD_from_fake, target_fake)
 
@@ -186,7 +185,6 @@ class Trainer(object):
                 loss_D_from_real = criterion_GAN(outD_from_real, target_real)
 
                 # compute fake loss
-                fake_B = fake_B_buffer.push_and_pop(fake_B)
                 outD_from_fake = self.netD_B(fake_B.detach())
                 loss_D_from_fake = criterion_GAN(outD_from_fake, target_fake)
 
