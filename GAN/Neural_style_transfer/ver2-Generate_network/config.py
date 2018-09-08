@@ -6,7 +6,7 @@ def get_config():
     # data preprocessing hyper-parameters
     parser.add_argument('--dataroot', type=str, default="F:\\Deep_learning\\Data\\coco\\val2017")
     parser.add_argument('--content_size', type=int, default=256)
-    parser.add_argument('--style_path', type=str, default='styles\\mosaic.jpg')
+    parser.add_argument('--style_path', type=str, default='styles\\dot_cartoon.png')
     parser.add_argument('--style_size', type=int, default=None)
     parser.add_argument('--batch_size', type=int, default=4)
 

@@ -1,3 +1,4 @@
+import os
 import torch
 from torchvision import transforms
 import torchvision.utils as vutils
@@ -9,7 +10,7 @@ from utils import *
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 class Tester(object):
-    def __init__(self, model_path, image_path):
+    def __init__(self, model_path, image_path, image_num, out_folder):
         self.model_path = model_path
         self.image_path = image_path
 
@@ -17,6 +18,10 @@ class Tester(object):
                 transforms.ToTensor(),
                 transforms.Lambda(lambda x: x.mul(255))
             ])
+
+        self.image_num = image_num
+        self.style_name = style_name
+        self.out_folder = out_folder
 
         self.load_net()
 
@@ -33,13 +38,24 @@ class Tester(object):
 
         output = self.model(image)
         output = output.div(255.0).clamp(0, 1)
-        vutils.save_image(output, "test\\output2.png")
+        file = "%s/output%d.jpg" % (self.out_folder, self.image_num)
+        vutils.save_image(output, file)
+        print("saving output image completed!")
 
 
 if __name__ == '__main__':
-    model = "samples\\model_final.pth"
-    image = "test\\input2.jpg"
+    style_name = "dot-cartoon"
+    in_folder = "test"
+    out_folder = "test/%s" % style_name
 
-    tester = Tester(model, image)
-    tester.test()
+    os.makedirs(out_folder, exist_ok=True)
+
+    model = "samples/%s/%s.pth" % (style_name, style_name)
+
+    for i in range(3):
+        image_num = i+1
+        image = "%s/input%d.jpg" % (in_folder, image_num)
+
+        tester = Tester(model, image, image_num, out_folder)
+        tester.test()
 

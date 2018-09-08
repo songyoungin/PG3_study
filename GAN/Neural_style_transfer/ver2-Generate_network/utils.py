@@ -21,7 +21,7 @@ def save_image(filename, img):
     img = img.clone().squeeze()
     img = denorm(img).clamp(0, 1)
 
-    print("in save_image:", img)
+    # print("in save_image:", img)
     vutils.save_image(img, filename)
 
 # compute Gram matrix
