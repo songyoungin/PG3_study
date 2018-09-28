@@ -5,8 +5,6 @@ import torch.nn as nn
 import torch.optim as optim
 from torchvision import transforms
 
-import cv2
-
 from model.nst import TransferNet
 from model.vgg import VGGNet
 import utils
@@ -38,8 +36,10 @@ class Trainer(object):
         # setup training hyper-parameters
         self.lr = config.lr
         self.nepochs = config.nepochs
+
         self.log_interval = config.log_interval
         self.sample_interval = config.sample_interval
+        self.checkpoint_interval = config.checkpoint_interval
 
         self.sample_folder = config.sample_folder
 
@@ -120,22 +120,20 @@ class Trainer(object):
                     vis.plot("Style loss per %d steps" % self.log_interval, style_loss.item())
                     vis.plot("Total loss per %d steps" % self.log_interval, total_loss.item())
 
-                    img = output_img.cpu()
-                    img = img[0]
-                    utils.save_image("%s\\output_epoch%d.png" % (self.sample_folder, epoch + 1), img)
-
-            # do checkpointing
+            # do save sample images
             if (epoch+1) % self.sample_interval == 0:
-                self.tfNet.eval()
-                torch.save(self.tfNet.state_dict(), "%s\\model_epoch%d.pth" % (self.sample_folder, epoch+1))
-
                 img = output_img.cpu()
                 img = img[0]
-                utils.save_image("%s\\output_epoch%d.png" % (self.sample_folder, epoch+1), img)
+                utils.save_image("%s/output_epoch%d.png" % (self.sample_folder, epoch + 1), img)
+
+            # do checkpointing
+            if (epoch+1) % self.checkpoint_interval == 0:
+                self.tfNet.eval()
+                torch.save(self.tfNet.state_dict(), "%s/model_epoch%d.pth" % (self.sample_folder, epoch + 1))
 
         print("Learning finished!!!")
         self.tfNet.eval().cpu()
-        torch.save(self.tfNet.state_dict(), "%s\\model_final.pth" % self.sample_folder)
+        torch.save(self.tfNet.state_dict(), "%s/epoch%d_final.pth" % (self.sample_folder, self.nepochs))
         print("Save model complete!!!")
 
 
